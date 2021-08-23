@@ -3,6 +3,7 @@ export interface ICustomerData {
 }
 
 interface ICustomerDetails {
-     name: string
-     feedback: string[]
+    id: number
+    name: string
+    feedback: string[]
 }
