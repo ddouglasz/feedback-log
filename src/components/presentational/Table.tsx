@@ -3,8 +3,9 @@ import styled from 'styled-components'
 
 import { ICustomerData } from '../../types/customerData.types'
 interface TableProps {
-  feedbackData: ICustomerData[]
+  customerData?: ICustomerData[]
   tableType: string
+  feedback?: string[]
 }
 
 const StyledTable = styled.div`
@@ -21,26 +22,24 @@ const StyledTable = styled.div`
   }
 `
 
-const Table = ({ feedbackData, tableType }: TableProps) => {
+const Table = ({ customerData, tableType, feedback }: TableProps) => {
   return tableType === 'customer' ? (
     <StyledTable className="table">
-      {feedbackData.map(customerDetails => (
-        <div className="customer-name table-cell" key={customerDetails.customer.id}>
-          {customerDetails.customer.name}
-        </div>
-      ))}
+      {customerData &&
+        customerData.map(customerDetails => (
+          <div className="customer-name table-cell" key={customerDetails.customer.id}>
+            {customerDetails.customer.name}
+          </div>
+        ))}
     </StyledTable>
   ) : (
     <StyledTable className="table">
-      {feedbackData.map(customerDetails => (
-        <div key={customerDetails.customer.id}>
-          {customerDetails.customer.feedback.map((userFeedback, index) => (
-            <div className="customer-feedback table-cell" key={index}>
-              {userFeedback}
-            </div>
-          ))}
-        </div>
-      ))}
+      {feedback &&
+        feedback.map((userFeedback, index) => (
+          <div className="customer-feedback table-cell" key={index}>
+            {userFeedback}
+          </div>
+        ))}
     </StyledTable>
   )
 }
