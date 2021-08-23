@@ -116,6 +116,12 @@ const FeedBackLog = () => {
     setNewCustomerName(event.target.value)
   }
 
+  window.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      setNewCustomerInput('display-none')
+    }
+  })
+
   return (
     <StyledFeedBackLog>
       <div className="menu-tab">
