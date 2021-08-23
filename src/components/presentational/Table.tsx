@@ -17,7 +17,7 @@ const StyledTable = styled.div`
   .table-cell {
     padding: 5px;
     text-align: start;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #000000;
   }
 `
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Table from '../presentational/Table'
 import Button from '../presentational/Button'
@@ -6,14 +6,13 @@ import { customerData } from '../../api/customerData'
 
 const StyledFeedBackLog = styled.div`
   width: 80%;
-  min-height: 60vh;
-  border: 1px solid black;
+  border: 1px solid #000000;
   margin: 20px auto;
 
   .menu-tab {
     width: 100%;
     height: 20vh;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #000000;
     text-align: start;
   }
 
@@ -28,8 +27,8 @@ const StyledFeedBackLog = styled.div`
   }
 
   .left-layout {
-    height: 100vh;
-    border-right: 1px solid black;
+    min-height: 50vh;
+    border-right: 1px solid #000000;
   }
 
   .customer-header {
@@ -48,12 +47,75 @@ const StyledFeedBackLog = styled.div`
     margin-right: 150px;
   }
 
-  .titile {
+  .title {
     padding: 20px;
+    font-weight: 900;
+  }
+
+  .center {
+    margin: auto;
+    width: 40%;
+    padding: 40% 0;
+    color: #808080;
+  }
+
+  .display-none {
+    display: none;
+  }
+
+  .add-new {
+    width: -webkit-fill-available;
+    padding: 5px;
+  }
+
+  .add-new:focus {
+    outline: none;
+  }
+
+  .add-new::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #1e90ff;
+  }
+
+  .add-new:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #1e90ff;
+  }
+
+  .add-new::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #1e90ff;
   }
 `
 
 const FeedBackLog = () => {
+  const [feedback, setFeedback] = useState([])
+  const [newCustomerInput, setNewCustomerInput] = useState('display-none')
+  const [newCustomerName, setNewCustomerName] = useState('')
+  const [newCustomer, setNewCustomer] = useState({})
+  const [customers, setCustomers] = useState(customerData)
+
+  const handleNewInput = () => {
+    setNewCustomerInput('')
+  }
+
+  const handleSubmit = (event: { preventDefault: () => void }) => {
+    event.preventDefault()
+    const customersCopy = [...customers]
+    const id = customers.length + 1
+    const newCustomerDetails = { customer: { id, name: newCustomerName, feedback: [] } }
+    //@ts-ignore
+    setCustomers([...customersCopy, newCustomerDetails])
+    console.log(customers)
+    setNewCustomerName('')
+    setNewCustomerInput('display-none')
+  }
+
+  const handleChange = (event: { preventDefault: () => void; target: { value: any } }) => {
+    event.preventDefault()
+    setNewCustomerName(event.target.value)
+  }
+
   return (
     <StyledFeedBackLog>
       <div className="menu-tab">
@@ -63,16 +125,31 @@ const FeedBackLog = () => {
         <div className="left-layout layout">
           <span className="customer-header">
             <span className="span-text-spacing">Customer</span>
-            <Button classes="customer-button" name="add new" />
+            <Button classes="customer-button" onclick={handleNewInput} name="add new" />
           </span>
-          <Table tableType="customer" feedbackData={customerData} />
+          <form onSubmit={handleSubmit} action="">
+            <input
+              placeholder="New Customer"
+              className={`${newCustomerInput} add-new`}
+              type="text"
+              value={newCustomerName}
+              onChange={handleChange}
+            />
+          </form>
+          <Table tableType="customer" customerData={customers} />
         </div>
         <div className="right-layout layout">
           <span className="feedback-header">
             <span className="span-text-spacing">Feedback</span>
-            <Button classes="feedback-button" name="add new" />
+            <Button classes="feedback-button" onclick={handleNewInput} name="add new" />
           </span>
-          <Table tableType="feedback" feedbackData={customerData} />
+          {feedback ? (
+            <>
+              <Table tableType="feedback" feedback={feedback} />
+            </>
+          ) : (
+            <div className="center">Please select a customer</div>
+          )}
         </div>
       </div>
     </StyledFeedBackLog>
