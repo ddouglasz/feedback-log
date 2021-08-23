@@ -99,6 +99,11 @@ const FeedBackLog = () => {
     setNewCustomerInput('')
   }
 
+  const hideInput = () => {
+    setNewCustomerName('')
+    setNewCustomerInput('display-none')
+  }
+
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
     const customersCopy = [...customers]
@@ -106,9 +111,7 @@ const FeedBackLog = () => {
     const newCustomerDetails = { customer: { id, name: newCustomerName, feedback: [] } }
     //@ts-ignore
     setCustomers([...customersCopy, newCustomerDetails])
-    console.log(customers)
-    setNewCustomerName('')
-    setNewCustomerInput('display-none')
+    hideInput()
   }
 
   const handleChange = (event: { preventDefault: () => void; target: { value: any } }) => {
@@ -118,7 +121,7 @@ const FeedBackLog = () => {
 
   window.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
-      setNewCustomerInput('display-none')
+      hideInput()
     }
   })
 
@@ -140,6 +143,7 @@ const FeedBackLog = () => {
               type="text"
               value={newCustomerName}
               onChange={handleChange}
+              onBlur={hideInput}
             />
           </form>
           <Table tableType="customer" customerData={customers} />
