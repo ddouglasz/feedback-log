@@ -91,13 +91,9 @@ const StyledFeedBackLog = styled.div`
 const FeedBackLog = () => {
   const [feedback, setFeedback] = useState([])
   const [newCustomerInput, setNewCustomerInput] = useState('display-none')
+  const [newFeedbackInput, setNewFeedbackInput] = useState('display-none')
   const [newCustomerName, setNewCustomerName] = useState('')
-  const [newCustomer, setNewCustomer] = useState({})
   const [customers, setCustomers] = useState(customerData)
-
-  const handleNewInput = () => {
-    setNewCustomerInput('')
-  }
 
   const hideInput = () => {
     setNewCustomerName('')
@@ -134,7 +130,11 @@ const FeedBackLog = () => {
         <div className="left-layout layout">
           <span className="customer-header">
             <span className="span-text-spacing">Customer</span>
-            <Button classes="customer-button" onclick={handleNewInput} name="add new" />
+            <Button
+              classes="customer-button"
+              onclick={() => setNewCustomerInput('')}
+              name="add new"
+            />
           </span>
           <form onSubmit={handleSubmit} action="">
             <input
@@ -151,10 +151,24 @@ const FeedBackLog = () => {
         <div className="right-layout layout">
           <span className="feedback-header">
             <span className="span-text-spacing">Feedback</span>
-            <Button classes="feedback-button" onclick={handleNewInput} name="add new" />
+            <Button
+              classes={`${feedback.length === 0 ? 'display-none' : ''} feedback-button`}
+              onclick={() => setNewFeedbackInput('')}
+              name="add new"
+            />
           </span>
-          {feedback ? (
+          {feedback.length !== 0 ? (
             <>
+              <form onSubmit={handleSubmit} action="">
+                <input
+                  placeholder="New Customer"
+                  className={`${newCustomerInput} add-new`}
+                  type="text"
+                  value={newCustomerName}
+                  onChange={handleChange}
+                  onBlur={hideInput}
+                />
+              </form>
               <Table tableType="feedback" feedback={feedback} />
             </>
           ) : (
