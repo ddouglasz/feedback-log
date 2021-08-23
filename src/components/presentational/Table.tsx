@@ -1,29 +1,47 @@
 import React from 'react'
-import { ICustomerData } from '../../types/customerData.types'
+import styled from 'styled-components'
 
+import { ICustomerData } from '../../types/customerData.types'
 interface TableProps {
-  data: ICustomerData[]
+  feedbackData: ICustomerData[]
   tableType: string
-  classes: string
 }
 
-const Table = ({ data, tableType, classes }: TableProps) => {
+const StyledTable = styled.div`
+  .table {
+    height: 60%;
+    width: 50%;
+    padding: 0 10px;
+  }
+
+  .table-cell {
+    padding: 5px;
+    text-align: start;
+    border-bottom: 1px solid black;
+  }
+`
+
+const Table = ({ feedbackData, tableType }: TableProps) => {
   return tableType === 'customer' ? (
-    <div className={classes}>
-      {data.map((customerDetails, index) => (
-        <div key={index}>{customerDetails.customer.name}</div>
+    <StyledTable className="table">
+      {feedbackData.map(customerDetails => (
+        <div className="customer-name table-cell" key={customerDetails.customer.id}>
+          {customerDetails.customer.name}
+        </div>
       ))}
-    </div>
+    </StyledTable>
   ) : (
-    <div className={classes}>
-      {data.map((customerDetails, index) => (
-        <div key={index}>
+    <StyledTable className="table">
+      {feedbackData.map(customerDetails => (
+        <div key={customerDetails.customer.id}>
           {customerDetails.customer.feedback.map((userFeedback, index) => (
-            <div key={index}>{userFeedback}</div>
+            <div className="customer-feedback table-cell" key={index}>
+              {userFeedback}
+            </div>
           ))}
         </div>
       ))}
-    </div>
+    </StyledTable>
   )
 }
 
