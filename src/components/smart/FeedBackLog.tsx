@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import TableCell from '../presentational/Table'
 import Button from '../presentational/Button'
+import Form from '../presentational/Form'
 import { customerData } from '../../api/customerData'
 import { ICustomerData } from '../../types/customerData.types'
 import { StyledFeedBackLog } from '../../styles/StyledFeedback'
@@ -66,15 +67,15 @@ const FeedBackLog = () => {
               name="add new"
             />
           </span>
-          <form onSubmit={handleSubmit} action="">
-            <input
-              placeholder="New Customer"
-              className={`${newCustomerInput} add-new`}
-              type="text"
-              value={newCustomerName}
-              onChange={handleNameChange}
-              onBlur={hideInput}
-            />
+          <Form
+            classes={`${newCustomerInput} add-new`}
+            onchange={handleNameChange}
+            onblur={hideInput}
+            type="text"
+            value={newCustomerName}
+            placeHolder="New Customer"
+            onsubmit={handleSubmit}
+          />
           </form>
           <div className="table">
             {customers &&
@@ -100,15 +101,15 @@ const FeedBackLog = () => {
           </span>
           {feedback.length !== 0 ? (
             <>
-              <form onSubmit={handleSubmit} action="">
-                <input
-                  placeholder="New Feedback"
-                  className={`${newFeedbackInput} add-new`}
-                  type="text"
-                  value={newFeedback}
-                  onChange={handleFeedbackChange}
-                  onBlur={hideInput}
-                />
+              <Form
+                classes={`${newFeedbackInput} add-new`}
+                onchange={handleFeedbackChange}
+                onblur={hideInput}
+                type="text"
+                value={newFeedback}
+                placeHolder="New Feedback"
+                onsubmit={handleSubmit}
+              />
               </form>
               <div className="table">
                 {feedback &&
