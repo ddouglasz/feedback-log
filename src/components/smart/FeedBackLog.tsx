@@ -1,118 +1,48 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
-import Table from '../presentational/Table'
+import TableCell from '../presentational/Table'
 import Button from '../presentational/Button'
 import { customerData } from '../../api/customerData'
-
-const StyledFeedBackLog = styled.div`
-  width: 80%;
-  border: 1px solid #000000;
-  margin: 20px auto;
-
-  .menu-tab {
-    width: 100%;
-    height: 20vh;
-    border-bottom: 1px solid #000000;
-    text-align: start;
-  }
-
-  .feedback-tabs {
-    display: flex;
-    position: relative;
-    justify-content: start;
-  }
-
-  .layout {
-    width: 50%;
-  }
-
-  .left-layout {
-    min-height: 50vh;
-    border-right: 1px solid #000000;
-  }
-
-  .customer-header {
-    position: absolute;
-    top: -40px;
-    left: 5%;
-  }
-
-  .feedback-header {
-    position: absolute;
-    top: -40px;
-    right: 5%;
-  }
-
-  .span-text-spacing {
-    margin-right: 150px;
-  }
-
-  .title {
-    padding: 20px;
-    font-weight: 900;
-  }
-
-  .center {
-    margin: auto;
-    width: 40%;
-    padding: 40% 0;
-    color: #808080;
-  }
-
-  .display-none {
-    display: none;
-  }
-
-  .add-new {
-    width: -webkit-fill-available;
-    padding: 5px;
-  }
-
-  .add-new:focus {
-    outline: none;
-  }
-
-  .add-new::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #1e90ff;
-  }
-
-  .add-new:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: #1e90ff;
-  }
-
-  .add-new::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: #1e90ff;
-  }
-`
+import { ICustomerData } from '../../types/customerData.types'
+import { StyledFeedBackLog } from '../../styles/StyledFeedback'
 
 const FeedBackLog = () => {
   const [feedback, setFeedback] = useState([])
-  const [newCustomerInput, setNewCustomerInput] = useState('display-none')
+  const [newFeedback, setNewFeedback] = useState('')
   const [newFeedbackInput, setNewFeedbackInput] = useState('display-none')
+  const [newCustomerInput, setNewCustomerInput] = useState('display-none')
   const [newCustomerName, setNewCustomerName] = useState('')
   const [customers, setCustomers] = useState(customerData)
+  const [cellColor, setCellColor] = useState('')
 
   const hideInput = () => {
     setNewCustomerName('')
     setNewCustomerInput('display-none')
+    setNewFeedbackInput('display-none')
   }
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
     const customersCopy = [...customers]
     const id = customers.length + 1
-    const newCustomerDetails = { customer: { id, name: newCustomerName, feedback: [] } }
+    const newCustomerDetails = { id, name: newCustomerName, feedback: [] }
     //@ts-ignore
     setCustomers([...customersCopy, newCustomerDetails])
     hideInput()
   }
 
-  const handleChange = (event: { preventDefault: () => void; target: { value: any } }) => {
+  const handleNameChange = (event: { preventDefault: () => void; target: { value: any } }) => {
     event.preventDefault()
     setNewCustomerName(event.target.value)
+  }
+
+  const handleFeedbackChange = (event: { preventDefault: () => void; target: { value: any } }) => {
+    event.preventDefault()
+    setNewFeedback(event.target.value)
+  }
+
+  const getCustomerFeedback = (id: number) => {
+    const [selectedCustomer]: ICustomerData[] | any = customers.filter(user => user.id === id)
+    setFeedback(selectedCustomer.feedback)
   }
 
   window.addEventListener('keydown', function (event) {
@@ -142,11 +72,22 @@ const FeedBackLog = () => {
               className={`${newCustomerInput} add-new`}
               type="text"
               value={newCustomerName}
-              onChange={handleChange}
+              onChange={handleNameChange}
               onBlur={hideInput}
             />
           </form>
-          <Table tableType="customer" customerData={customers} />
+          <div className="table">
+            {customers &&
+              customers.map(customerDetails => (
+                <TableCell
+                  classes="customer-cell"
+                  key={customerDetails.id}
+                  onclick={() => getCustomerFeedback(customerDetails.id)}
+                >
+                  {customerDetails.name}
+                </TableCell>
+              ))}
+          </div>
         </div>
         <div className="right-layout layout">
           <span className="feedback-header">
@@ -161,15 +102,20 @@ const FeedBackLog = () => {
             <>
               <form onSubmit={handleSubmit} action="">
                 <input
-                  placeholder="New Customer"
-                  className={`${newCustomerInput} add-new`}
+                  placeholder="New Feedback"
+                  className={`${newFeedbackInput} add-new`}
                   type="text"
-                  value={newCustomerName}
-                  onChange={handleChange}
+                  value={newFeedback}
+                  onChange={handleFeedbackChange}
                   onBlur={hideInput}
                 />
               </form>
-              <Table tableType="feedback" feedback={feedback} />
+              <div className="table">
+                {feedback &&
+                  feedback.map((userFeedback, index) => (
+                    <TableCell key={index}>{userFeedback}</TableCell>
+                  ))}
+              </div>
             </>
           ) : (
             <div className="center">Please select a customer</div>
