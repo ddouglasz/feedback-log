@@ -15,7 +15,6 @@ const FeedBackLog = () => {
   const [newCustomerName, setNewCustomerName] = useState('')
   const [customers, setCustomers] = useState(customerData)
   const [customerId, setCustomerId] = useState(0)
-  const [cellColor, setCellColor] = useState('')
 
   const hideInput = () => {
     setNewCustomerName('')
@@ -34,11 +33,15 @@ const FeedBackLog = () => {
     hideInput()
   }
 
+  const selectedCustomer = customers.filter(cus => cus.id === customerId)[0]
+
   const handleFeedbackSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
-    const feedBackCopy = [...feedback]
-    //@ts-ignore
-    setFeedback([...feedBackCopy, newFeedback])
+    // //@ts-ignore
+    const copiedCustomers = [...customers]
+    const selectedCustomer = customers.filter(cus => cus.id === customerId)[0]
+    selectedCustomer.feedback = [newFeedback, ...selectedCustomer.feedback]
+    setCustomers(copiedCustomers)
     hideInput()
   }
 
@@ -113,29 +116,7 @@ const FeedBackLog = () => {
               name="add new"
             />
           </span>
-          {/* {feedback.length !== 0 ? (
-            <>
-              <Form
-                classes={`${newFeedbackInput} add-new`}
-                onchange={handleFeedbackChange}
-                onblur={hideInput}
-                type="text"
-                value={newFeedback}
-                placeHolder="New Feedback"
-                onsubmit={handleSubmit}
-              />
-              <div className="table">
-                {feedback &&
-                  feedback.map((userFeedback, index) => (
-                    <TableCell key={index}>{userFeedback}</TableCell>
-                  ))}
-              </div>
-            </>
-          ) : (
-            <div className="center">Please select a customer</div>
-          )} */}
-
-          {
+          {customerId ? (
             <>
               <Form
                 classes={`${newFeedbackInput} add-new`}
@@ -147,13 +128,14 @@ const FeedBackLog = () => {
                 onsubmit={handleFeedbackSubmit}
               />
               <div className="table">
-                {feedback &&
-                  feedback.map((userFeedback, index) => (
-                    <TableCell key={index}>{userFeedback}</TableCell>
-                  ))}
+                {selectedCustomer.feedback.map((userFeedback, index) => (
+                  <TableCell key={index}>{userFeedback}</TableCell>
+                ))}
               </div>
             </>
-          }
+          ) : (
+            <div className="center">Please select a customer</div>
+          )}
         </div>
       </div>
     </StyledFeedBackLog>
