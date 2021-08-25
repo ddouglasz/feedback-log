@@ -11,23 +11,34 @@ const FeedBackLog = () => {
   const [newFeedback, setNewFeedback] = useState('')
   const [newFeedbackInput, setNewFeedbackInput] = useState('display-none')
   const [newCustomerInput, setNewCustomerInput] = useState('display-none')
+  const [buttonVisibility, setButtonVisibility] = useState('display-none')
   const [newCustomerName, setNewCustomerName] = useState('')
   const [customers, setCustomers] = useState(customerData)
+  const [customerId, setCustomerId] = useState(0)
   const [cellColor, setCellColor] = useState('')
 
   const hideInput = () => {
     setNewCustomerName('')
+    setNewFeedback('')
     setNewCustomerInput('display-none')
     setNewFeedbackInput('display-none')
   }
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleCustomerSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
     const customersCopy = [...customers]
     const id = customers.length + 1
     const newCustomerDetails = { id, name: newCustomerName, feedback: [] }
     //@ts-ignore
     setCustomers([...customersCopy, newCustomerDetails])
+    hideInput()
+  }
+
+  const handleFeedbackSubmit = (event: { preventDefault: () => void }) => {
+    event.preventDefault()
+    const feedBackCopy = [...feedback]
+    //@ts-ignore
+    setFeedback([...feedBackCopy, newFeedback])
     hideInput()
   }
 
@@ -44,6 +55,7 @@ const FeedBackLog = () => {
   const getCustomerFeedback = (id: number) => {
     const [selectedCustomer]: ICustomerData[] | any = customers.filter(user => user.id === id)
     setFeedback(selectedCustomer.feedback)
+    setButtonVisibility('')
   }
 
   window.addEventListener('keydown', function (event) {
@@ -74,16 +86,18 @@ const FeedBackLog = () => {
             type="text"
             value={newCustomerName}
             placeHolder="New Customer"
-            onsubmit={handleSubmit}
+            onsubmit={handleCustomerSubmit}
           />
-          </form>
           <div className="table">
             {customers &&
               customers.map(customerDetails => (
                 <TableCell
                   classes="customer-cell"
                   key={customerDetails.id}
-                  onclick={() => getCustomerFeedback(customerDetails.id)}
+                  onclick={() => {
+                    setCustomerId(customerDetails.id)
+                    getCustomerFeedback(customerDetails.id)
+                  }}
                 >
                   {customerDetails.name}
                 </TableCell>
@@ -94,12 +108,12 @@ const FeedBackLog = () => {
           <span className="feedback-header">
             <span className="span-text-spacing">Feedback</span>
             <Button
-              classes={`${feedback.length === 0 ? 'display-none' : ''} feedback-button`}
+              classes={`${feedback.length === 0 ? buttonVisibility : ''} feedback-button`}
               onclick={() => setNewFeedbackInput('')}
               name="add new"
             />
           </span>
-          {feedback.length !== 0 ? (
+          {/* {feedback.length !== 0 ? (
             <>
               <Form
                 classes={`${newFeedbackInput} add-new`}
@@ -110,7 +124,6 @@ const FeedBackLog = () => {
                 placeHolder="New Feedback"
                 onsubmit={handleSubmit}
               />
-              </form>
               <div className="table">
                 {feedback &&
                   feedback.map((userFeedback, index) => (
@@ -120,7 +133,27 @@ const FeedBackLog = () => {
             </>
           ) : (
             <div className="center">Please select a customer</div>
-          )}
+          )} */}
+
+          {
+            <>
+              <Form
+                classes={`${newFeedbackInput} add-new`}
+                onchange={handleFeedbackChange}
+                onblur={hideInput}
+                type="text"
+                value={newFeedback}
+                placeHolder="New Feedback"
+                onsubmit={handleFeedbackSubmit}
+              />
+              <div className="table">
+                {feedback &&
+                  feedback.map((userFeedback, index) => (
+                    <TableCell key={index}>{userFeedback}</TableCell>
+                  ))}
+              </div>
+            </>
+          }
         </div>
       </div>
     </StyledFeedBackLog>
