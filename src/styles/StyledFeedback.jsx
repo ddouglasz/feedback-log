@@ -88,8 +88,12 @@ export const StyledFeedBackLog = styled.div`
   }
 
   .customer-cell:hover {
-    background-color: #1e90ff;
     cursor: pointer;
+  }
+
+  .bg-blue {
+    background-color: #1e90ff;
+    color: #FFFF;
   }
 
   .table {

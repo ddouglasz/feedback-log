@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import TableCell from '../presentational/Table'
+import TableCell from '../presentational/TableCell'
 import Button from '../presentational/Button'
 import Form from '../presentational/Form'
 import { customerData } from '../../api/customerData'
@@ -7,14 +7,15 @@ import { ICustomerData } from '../../types/customerData.types'
 import { StyledFeedBackLog } from '../../styles/StyledFeedback'
 
 const FeedBackLog = () => {
-  const [feedback, setFeedback] = useState([])
-  const [newFeedback, setNewFeedback] = useState('')
-  const [newFeedbackInput, setNewFeedbackInput] = useState('display-none')
-  const [newCustomerInput, setNewCustomerInput] = useState('display-none')
-  const [buttonVisibility, setButtonVisibility] = useState('display-none')
-  const [newCustomerName, setNewCustomerName] = useState('')
-  const [customers, setCustomers] = useState(customerData)
-  const [customerId, setCustomerId] = useState(0)
+  const [feedback, setFeedback] = useState<string[]>([])
+  const [newFeedback, setNewFeedback] = useState<string>('')
+  const [newFeedbackInput, setNewFeedbackInput] = useState<string>('display-none')
+  const [newCustomerInput, setNewCustomerInput] = useState<string>('display-none')
+  const [buttonVisibility, setButtonVisibility] = useState<string>('display-none')
+  const [newCustomerName, setNewCustomerName] = useState<string>('')
+  const [customers, setCustomers] = useState<ICustomerData[]>(customerData)
+  const [customerId, setCustomerId] = useState<number>(0)
+  const [isClicked, setIsClicked] = useState<number>()
 
   const hideInput = () => {
     setNewCustomerName('')
@@ -55,7 +56,8 @@ const FeedBackLog = () => {
     setNewFeedback(event.target.value)
   }
 
-  const getCustomerFeedback = (id: number) => {
+  const getCustomerFeedback = (event: any, id: number) => {
+    event.preventDefault()
     const [selectedCustomer]: ICustomerData[] | any = customers.filter(user => user.id === id)
     setFeedback(selectedCustomer.feedback)
     setButtonVisibility('')
@@ -95,11 +97,13 @@ const FeedBackLog = () => {
             {customers &&
               customers.map(customerDetails => (
                 <TableCell
-                  classes="customer-cell"
                   key={customerDetails.id}
-                  onclick={() => {
+                  id={customerDetails.id.toString()}
+                  active={customerDetails.id === isClicked}
+                  onclick={(event: any) => {
+                    setIsClicked(customerDetails.id)
                     setCustomerId(customerDetails.id)
-                    getCustomerFeedback(customerDetails.id)
+                    getCustomerFeedback(event, customerDetails.id)
                   }}
                 >
                   {customerDetails.name}
