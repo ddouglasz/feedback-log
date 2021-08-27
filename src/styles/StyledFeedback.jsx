@@ -62,6 +62,8 @@ export const StyledFeedBackLog = styled.div`
   .add-new {
     width: -webkit-fill-available;
     padding: 5px;
+    border: none;
+    border-bottom: 1px solid;
   }
 
   .add-new:focus {
