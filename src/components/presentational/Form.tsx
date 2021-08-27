@@ -12,8 +12,9 @@ interface IFormProps {
 
 const Form = ({ classes, onchange, onblur, value, type, placeHolder, onsubmit }: IFormProps) => {
   return (
-    <form onSubmit={onsubmit} action="">
+    <form onSubmit={onsubmit} action="" data-testid="input-form">
       <input
+        data-testid="input-field"
         placeholder={placeHolder}
         className={classes}
         type={type}

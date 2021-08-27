@@ -4,9 +4,8 @@ import styled from 'styled-components'
 interface ITableCellProps {
   children: any
   onclick?: (event: any) => void
-  // classes?: string
   id?: string
-  active?: any
+  active?: boolean
 }
 
 const StyledTableCell = styled.div`
@@ -21,6 +20,7 @@ const TableCell = ({ children, onclick, id, active }: ITableCellProps) => {
       className={active ? 'bg-blue customer-cell' : 'customer-cell'}
       onClick={onclick}
       id={id}
+      data-testid="table-cell-id"
     >
       {children}
     </StyledTableCell>
