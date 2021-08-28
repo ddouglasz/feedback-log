@@ -5,6 +5,7 @@ import Form from '../presentational/Form'
 import { customerData } from '../../api/customerData'
 import { ICustomerData } from '../../types/customerData.types'
 import { StyledFeedBackLog } from '../../styles/StyledFeedback'
+import Loader from '../utils/LoadingComponent'
 
 const FeedBackLog = () => {
   const [feedback, setFeedback] = useState<string[]>([])
@@ -68,6 +69,11 @@ const FeedBackLog = () => {
       hideInput()
     }
   })
+
+  /**Unlikely in this case because of where out data is coming from
+   *  but assuming we were fetching from an api,
+   *  we need to wait for data to be available before performing any operations. */
+  if (!customerData) return <Loader />
 
   return (
     <StyledFeedBackLog>
