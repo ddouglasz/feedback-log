@@ -47,12 +47,15 @@ const FeedBackLog = () => {
     hideInput()
   }
 
-  const handleNameChange = (event: { preventDefault: () => void; target: { value: any } }) => {
+  const handleNameChange = (event: { preventDefault: () => void; target: { value: string } }) => {
     event.preventDefault()
     setNewCustomerName(event.target.value)
   }
 
-  const handleFeedbackChange = (event: { preventDefault: () => void; target: { value: any } }) => {
+  const handleFeedbackChange = (event: {
+    preventDefault: () => void
+    target: { value: string }
+  }) => {
     event.preventDefault()
     setNewFeedback(event.target.value)
   }
@@ -63,7 +66,7 @@ const FeedBackLog = () => {
     }
   })
 
-  const handleSearchChange = (event: any) => {
+  const handleSearchChange = (event: { target: { value: React.SetStateAction<string> } }) => {
     setSearchTerm(event.target.value)
     const singleFeecbackWord = selectedCustomer.feedback.filter(singleFeeback =>
       singleFeeback.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -82,7 +85,7 @@ const FeedBackLog = () => {
   if (!customerData) return <Loader />
 
   const regex = new RegExp(`${searchTerm}`, 'gi')
-  const createMarkup = (html: any) => {
+  const createMarkup = (html: string) => {
     return { __html: html }
   }
 
@@ -138,7 +141,7 @@ const FeedBackLog = () => {
                   key={customerDetails.id}
                   id={customerDetails.id.toString()}
                   active={customerDetails.id === isClicked}
-                  onclick={(event: any) => {
+                  onclick={() => {
                     setIsClicked(customerDetails.id)
                     setCustomerId(customerDetails.id)
                   }}
