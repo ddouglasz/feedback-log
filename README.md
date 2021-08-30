@@ -1,10 +1,36 @@
-# Getting Started with Create React App
+# FeedbackLog Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- This project is a dashboard that managers customer feedback
+
+Project is available on [github](https://github.com/ddouglasz/feedback-log)
+
+Hosted on: [Netlify](https://feedbacklog.netlify.app/)
+
+NB: hosted version is `developmnent` branch
+
+
+### App Features
+- User can add new customer
+
+- Customer can add new feedback 
+
+- User can click on a customer to see all feedback
+
+- Feedback input can be cancelled using `Escape` Key or clicking outside input field before submitting feecback
+
+- Customer input can be cancelled using `Escape` Key or clicking outside input field before submitting feecback
+
+- User can search for a customer feedback and see highlighted texts of searchTerm
+
+
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+## `yarn install`
+
+Install all app dependencies
 
 ### `yarn start`
 
@@ -19,28 +45,40 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+### App structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+***Data source***
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+location: `src > data > customerData`
+- There is an array of objects responsible for holding customer data.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+***Components***
+- There are two kinds of components: `Presentational components` and `Smart components`
 
-### `yarn eject`
+- The main functionality is and most of the state management exists in `src > components > smart > FeedbackLog.tsx`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+***styles***
+- I used [styled component](https://styled-components.com/) for then styling.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- For bigger styling(like the styling for FeedbackLog component), I created a new directory for them to make the project more readable and modular.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Find in `src > styles`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Tests 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Run test using: `yarn test`
+
+- Unit tests are written using react testing library [React testing librady](https://testing-library.com/docs/react-testing-library/intro/).
+
+- Each component has at least test case.
+
+### Things to improve on
+
+- `Styling:` I would most likely invest more time in styling and maybe painting the page.
+
+- `Tests:` I would write more tests on the FeedbackLog and write more indepth tests if I had more time.
+
+-  `Types:` There are some places where I used `any` for typing my datatype, I would look deeper if I had more time to make sure I properly define the datatype.
+
