@@ -66,7 +66,7 @@ location: `src > data > customerData`
 
 
 
-### tests 
+### Tests 
 
 - Run test using: `yarn test`
 
@@ -74,7 +74,7 @@ location: `src > data > customerData`
 
 - Each component has at least test case.
 
-### things to improve on
+### Things to improve on
 
 - `Styling:` I would most likely invest more time in styling and maybe painting the page.
 
