@@ -58,6 +58,6 @@ location: `src > data > customerData`
 
 ### things to improve on
 
-- `Responsiveness: ` I would normally use media query to rearrange the app to fit multiple screen sizes ranging from tablet to mobile if I had more time to invest in the project.
+- `Styling: ` I would most likely invest more time in styling and maybe painting the page.
 
-- I would reite more tests on the FeedbackLog.
+- I would write more tests on the FeedbackLog and write more indepth tests if I had more time.
