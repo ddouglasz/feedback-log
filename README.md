@@ -4,6 +4,24 @@
 
 Project is available on [github](https://github.com/ddouglasz/feedback-log)
 
+Hosted on: [Netlify](https://feedbacklog.netlify.app/)
+
+NB: hosted version is `developmnent` branch
+
+
+### App Features
+- User can add new customer
+
+- Customer can add new feedback 
+
+- User can click on a customer to see all feedback
+
+- Feedback input can be cancelled using `Escape` Key or clicking outside input field before submitting feecback
+
+- Customer input can be cancelled using `Escape` Key or clicking outside input field before submitting feecback
+
+- User can search for a customer feedback and see highlighted texts of searchTerm
+
 
 
 ## Available Scripts
@@ -63,3 +81,4 @@ location: `src > data > customerData`
 - `Tests:` I would write more tests on the FeedbackLog and write more indepth tests if I had more time.
 
 -  `Types:` There are some places where I used `any` for typing my datatype, I would look deeper if I had more time to make sure I properly define the datatype.
+
