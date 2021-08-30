@@ -6,11 +6,25 @@ export const StyledFeedBackLog = styled.div`
   margin: 20px auto;
 
   .menu-tab {
-    width: 100%;
+    /* width: 100%; */
     height: 20vh;
     border-bottom: 1px solid #000000;
     text-align: start;
     position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+
+  .title {
+    /* padding: 20px;
+    font-weight: 900; */
+  }
+
+  .search-input {
+    /* position: absolute;
+    right: 5%;
+    top: 15%; */
   }
 
   .feedback-tabs {
@@ -42,11 +56,6 @@ export const StyledFeedBackLog = styled.div`
 
   .span-text-spacing {
     margin-right: 150px;
-  }
-
-  .title {
-    padding: 20px;
-    font-weight: 900;
   }
 
   .center {
@@ -103,10 +112,4 @@ export const StyledFeedBackLog = styled.div`
     height: 60%;
     width: 100%;
   }
-
-  .search-input {
-    position: absolute;
-    right: 5%;
-    top: 15%;
-}
 `

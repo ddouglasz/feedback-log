@@ -99,6 +99,7 @@ const FeedBackLog = () => {
   return (
     <StyledFeedBackLog>
       <div className="menu-tab">
+        <div className="title">Customer Feedback</div>
         <Form
           classes={`${searchInputVisibility} search-input`}
           onchange={handleSearchChange}
@@ -106,7 +107,6 @@ const FeedBackLog = () => {
           value={searchTerm}
           placeHolder="Search feedback"
         />
-        <div className="title">Customer Feedback</div>
       </div>
       <div className="feedback-tabs">
         <div className="left-layout layout">

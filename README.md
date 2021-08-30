@@ -1,4 +1,4 @@
-# Project
+# FeedbackLog Project
 
 - This project is a dashboard that managers customer feedback
 
