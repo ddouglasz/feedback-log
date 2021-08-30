@@ -10,6 +10,7 @@ export const StyledFeedBackLog = styled.div`
     height: 20vh;
     border-bottom: 1px solid #000000;
     text-align: start;
+    position: relative;
   }
 
   .feedback-tabs {
@@ -102,4 +103,10 @@ export const StyledFeedBackLog = styled.div`
     height: 60%;
     width: 100%;
   }
+
+  .search-input {
+    position: absolute;
+    right: 5%;
+    top: 15%;
+}
 `

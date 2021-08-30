@@ -5,9 +5,9 @@ interface IFormProps {
   value: string
   classes?: string
   placeHolder: string
-  onblur: () => void
+  onblur?: () => void
   onchange: (event: { preventDefault: () => void; target: { value: string } }) => void
-  onsubmit: (event: { preventDefault: () => void }) => void
+  onsubmit?: (event: { preventDefault: () => void }) => void
 }
 
 const Form = ({ classes, onchange, onblur, value, type, placeHolder, onsubmit }: IFormProps) => {

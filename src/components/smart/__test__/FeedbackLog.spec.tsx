@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import FeedbackLog from '../FeedBackLog'
-import jest from 'jest-mock'
 import { customerData } from '../../../api/customerData'
 
 describe('Feedback Component', () => {

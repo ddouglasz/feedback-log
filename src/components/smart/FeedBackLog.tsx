@@ -10,19 +10,22 @@ import Loader from '../utils/LoadingComponent'
 const FeedBackLog = () => {
   const [feedback, setFeedback] = useState<string[]>([])
   const [newFeedback, setNewFeedback] = useState<string>('')
-  const [newFeedbackInput, setNewFeedbackInput] = useState<string>('display-none')
+  const [feedbackInput, setFeedbackInput] = useState<string>('display-none')
   const [newCustomerInput, setNewCustomerInput] = useState<string>('display-none')
   const [buttonVisibility, setButtonVisibility] = useState<string>('display-none')
+  const [searchInputVisibility, setSearchInputVisibility] = useState<string>('display-none')
   const [newCustomerName, setNewCustomerName] = useState<string>('')
   const [customers, setCustomers] = useState<ICustomerData[]>(customerData)
   const [customerId, setCustomerId] = useState<number>(0)
   const [isClicked, setIsClicked] = useState<number>()
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [searchResult, setSearchResult] = useState<string[]>([])
 
   const hideInput = () => {
     setNewCustomerName('')
     setNewFeedback('')
     setNewCustomerInput('display-none')
-    setNewFeedbackInput('display-none')
+    setFeedbackInput('display-none')
   }
 
   const handleCustomerSubmit = (event: { preventDefault: () => void }) => {
@@ -70,14 +73,35 @@ const FeedBackLog = () => {
     }
   })
 
+  const handleSearchChange = (event: any) => {
+    setSearchTerm(event.target.value)
+    const singleFeecbackWord = selectedCustomer.feedback.filter(singleFeeback =>
+      singleFeeback.toLowerCase().includes(searchTerm.toLowerCase()),
+    )
+
+    setSearchResult(singleFeecbackWord)
+  }
+
   /**Unlikely in this case because of where out data is coming from
    *  but assuming we were fetching from an api,
    *  we need to wait for data to be available before performing any operations. */
   if (!customerData) return <Loader />
 
+  const regex = new RegExp(`${searchTerm}`, 'gi')
+  const createMarkup = (html: any) => {
+    return { __html: html }
+  }
+
   return (
     <StyledFeedBackLog>
       <div className="menu-tab">
+        <Form
+          classes={`${searchInputVisibility} search-input`}
+          onchange={handleSearchChange}
+          type="text"
+          value={searchTerm}
+          placeHolder="Search feedback"
+        />
         <div className="title">Customer Feedback</div>
       </div>
       <div className="feedback-tabs">
@@ -110,6 +134,7 @@ const FeedBackLog = () => {
                     setIsClicked(customerDetails.id)
                     setCustomerId(customerDetails.id)
                     getCustomerFeedback(event, customerDetails.id)
+                    setSearchInputVisibility('')
                   }}
                 >
                   {customerDetails.name}
@@ -122,14 +147,14 @@ const FeedBackLog = () => {
             <span className="span-text-spacing">Feedback</span>
             <Button
               classes={`${feedback.length === 0 ? buttonVisibility : ''} feedback-button`}
-              onclick={() => setNewFeedbackInput('')}
+              onclick={() => setFeedbackInput('')}
               name="add new"
             />
           </span>
           {customerId ? (
             <>
               <Form
-                classes={`${newFeedbackInput} add-new`}
+                classes={`${feedbackInput} add-new`}
                 onchange={handleFeedbackChange}
                 onblur={hideInput}
                 type="text"
@@ -138,9 +163,21 @@ const FeedBackLog = () => {
                 onsubmit={handleFeedbackSubmit}
               />
               <div className="table">
-                {selectedCustomer.feedback.map((userFeedback, index) => (
-                  <TableCell key={index}>{userFeedback}</TableCell>
-                ))}
+                {searchResult.length > 0
+                  ? searchResult.map((userFeedback, index) => (
+                      <TableCell
+                        dangerouslySetInnerHTML={createMarkup(
+                          userFeedback.replace(
+                            regex,
+                            `<span style="background: #1e90ff; color: #ffff">${searchTerm}</span>`,
+                          ),
+                        )}
+                        key={index}
+                      />
+                    ))
+                  : selectedCustomer.feedback.map((userFeedback, index) => (
+                      <TableCell key={index}>{userFeedback}</TableCell>
+                    ))}
               </div>
             </>
           ) : (
