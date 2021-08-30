@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TableCell from '../presentational/TableCell'
 import Button from '../presentational/Button'
 import Form from '../presentational/Form'
@@ -76,11 +76,15 @@ const FeedBackLog = () => {
   const handleSearchChange = (event: any) => {
     setSearchTerm(event.target.value)
     const singleFeecbackWord = selectedCustomer.feedback.filter(singleFeeback =>
-      singleFeeback.toLowerCase().split(' ').join('').includes(searchTerm.toLowerCase()),
+      singleFeeback.toLowerCase().includes(searchTerm.toLowerCase()),
     )
 
     setSearchResult(singleFeecbackWord)
   }
+
+  useEffect(() => {
+    if (searchTerm.length === 0) setSearchResult([])
+  }, [searchTerm])
 
   /**Unlikely in this case because of where out data is coming from
    *  but assuming we were fetching from an api,
@@ -163,25 +167,21 @@ const FeedBackLog = () => {
                 onsubmit={handleFeedbackSubmit}
               />
               <div className="table">
-                {searchResult.length > 0 ? (
-                  searchResult.map((userFeedback, index) => (
-                    <TableCell
-                      dangerouslySetInnerHTML={createMarkup(
-                        userFeedback.replace(
-                          regex,
-                          `<span style="background: #1e90ff; color: #ffff">${searchTerm}</span>`,
-                        ),
-                      )}
-                      key={index}
-                    />
-                  ))
-                ) : searchTerm.length > 0 ? (
-                  <div className="center">No result for <span style={{color: "#1e90ff"}}>{searchTerm}</span></div>
-                ) : (
-                  selectedCustomer.feedback.map((userFeedback, index) => (
-                    <TableCell key={index}>{userFeedback}</TableCell>
-                  ))
-                )}
+                {searchResult.length > 0
+                  ? searchResult.map((userFeedback, index) => (
+                      <TableCell
+                        dangerouslySetInnerHTML={createMarkup(
+                          userFeedback.replace(
+                            regex,
+                            `<span style="background: #1e90ff; color: #ffff">${searchTerm}</span>`,
+                          ),
+                        )}
+                        key={index}
+                      />
+                    ))
+                  : selectedCustomer.feedback.map((userFeedback, index) => (
+                      <TableCell key={index}>{userFeedback}</TableCell>
+                    ))}
               </div>
             </>
           ) : (
