@@ -41,7 +41,6 @@ const FeedBackLog = () => {
     event.preventDefault()
     // //@ts-ignore
     const copiedCustomers = [...customers]
-    const selectedCustomer = customers.filter(cus => cus.id === customerId)[0]
     selectedCustomer.feedback = [newFeedback, ...selectedCustomer.feedback]
     setCustomers(copiedCustomers)
     hideInput()
@@ -144,6 +143,8 @@ const FeedBackLog = () => {
                   onclick={() => {
                     setIsClicked(customerDetails.id)
                     setCustomerId(customerDetails.id)
+                    setSearchResult([])
+                    setSearchTerm('')
                   }}
                 >
                   {customerDetails.name}
