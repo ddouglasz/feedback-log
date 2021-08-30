@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- This project is a dashboard that managers customer feedback
+
+Project is available on [github](https://github.com/ddouglasz/feedback-log)
+
+
 
 ## Available Scripts
 
