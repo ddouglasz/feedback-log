@@ -18,6 +18,13 @@ export const StyledFeedBackLog = styled.div`
     width: 100%;
   }
 
+  @media (max-width: 500px) {
+    .upper-menu {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
   .lower-menu {
     display: flex;
     justify-content: space-between;
@@ -28,6 +35,9 @@ export const StyledFeedBackLog = styled.div`
     display: flex;
     justify-content: space-between;
     width: 50%;
+    @media (max-width: 500px) { 
+      flex-direction: column;
+    }
   }
 
   .tab-spacing {
@@ -39,11 +49,13 @@ export const StyledFeedBackLog = styled.div`
   }
 
   .search-input {
-    height: 30px;
-    width: 200px;
     padding: 5px;
-    font-size: 20px;
+    @media (max-width: 500px) { 
+      margin-top: 10px;
+    }
   }
+
+
   .search-input:focus {
     outline: none;
   }
@@ -74,6 +86,15 @@ export const StyledFeedBackLog = styled.div`
     display: none;
   }
 
+  @media(max-width: 500px) {
+    .feedback-button, .customer-button {
+      padding: 0;
+      width: 70px;
+      margin-top: 5px;
+  }
+  }
+  
+
   .add-new {
     width: -webkit-fill-available;
     padding: 10px 20px;
@@ -99,6 +120,10 @@ export const StyledFeedBackLog = styled.div`
   .add-new::-ms-input-placeholder {
     /* Microsoft Edge */
     color: #1e90ff;
+  }
+
+  .customer-cell {
+    overflow-x: scroll;
   }
 
   .customer-cell:hover {
