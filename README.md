@@ -29,6 +29,11 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### App structure
 
+***Data source***
+
+location: `src > data > customerData`
+- There is an array of objects responsible for holding customer data.
+
 ***Components***
 - There are two kinds of components: `Presentational components` and `Smart components`
 
