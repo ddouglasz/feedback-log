@@ -176,7 +176,7 @@ const FeedBackLog = () => {
                     />
                   ))
                 ) : searchTerm.length > 0 ? (
-                  <div className="center">No result for your search</div>
+                  <div className="center">No result for <span style={{color: "#1e90ff"}}>{searchTerm}</span></div>
                 ) : (
                   selectedCustomer.feedback.map((userFeedback, index) => (
                     <TableCell key={index}>{userFeedback}</TableCell>
