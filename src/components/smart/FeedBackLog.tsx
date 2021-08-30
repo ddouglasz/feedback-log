@@ -8,12 +8,9 @@ import { StyledFeedBackLog } from '../../styles/StyledFeedback'
 import Loader from '../utils/LoadingComponent'
 
 const FeedBackLog = () => {
-  const [feedback, setFeedback] = useState<string[]>([])
   const [newFeedback, setNewFeedback] = useState<string>('')
-  const [feedbackInput, setFeedbackInput] = useState<string>('display-none')
-  const [newCustomerInput, setNewCustomerInput] = useState<string>('display-none')
-  const [buttonVisibility, setButtonVisibility] = useState<string>('display-none')
-  const [searchInputVisibility, setSearchInputVisibility] = useState<string>('display-none')
+  const [feedbackInput, setFeedbackInput] = useState<boolean>(false)
+  const [newCustomerInput, setNewCustomerInput] = useState<boolean>(false)
   const [newCustomerName, setNewCustomerName] = useState<string>('')
   const [customers, setCustomers] = useState<ICustomerData[]>(customerData)
   const [customerId, setCustomerId] = useState<number>(0)
@@ -24,8 +21,8 @@ const FeedBackLog = () => {
   const hideInput = () => {
     setNewCustomerName('')
     setNewFeedback('')
-    setNewCustomerInput('display-none')
-    setFeedbackInput('display-none')
+    setNewCustomerInput(false)
+    setFeedbackInput(false)
   }
 
   const handleCustomerSubmit = (event: { preventDefault: () => void }) => {
@@ -58,13 +55,6 @@ const FeedBackLog = () => {
   const handleFeedbackChange = (event: { preventDefault: () => void; target: { value: any } }) => {
     event.preventDefault()
     setNewFeedback(event.target.value)
-  }
-
-  const getCustomerFeedback = (event: any, id: number) => {
-    event.preventDefault()
-    const [selectedCustomer]: ICustomerData[] | any = customers.filter(user => user.id === id)
-    setFeedback(selectedCustomer.feedback)
-    setButtonVisibility('')
   }
 
   window.addEventListener('keydown', function (event) {
@@ -102,7 +92,7 @@ const FeedBackLog = () => {
         <div className="upper-menu">
           <div className="title">Customer Feedback</div>
           <Form
-            classes={`${searchInputVisibility} search-input`}
+            classes={!selectedCustomer ? 'display-none' : 'search-input'}
             onchange={handleSearchChange}
             type="text"
             value={searchTerm}
@@ -115,7 +105,7 @@ const FeedBackLog = () => {
             <span className="customer-text">Customer</span>
             <Button
               classes="customer-button"
-              onclick={() => setNewCustomerInput('')}
+              onclick={() => setNewCustomerInput(true)}
               name="add new"
             />
           </div>
@@ -123,8 +113,8 @@ const FeedBackLog = () => {
           <div className="lower-menu-tab">
             <span className="feedback-text">Feedback</span>
             <Button
-              classes={`${feedback.length === 0 ? buttonVisibility : ''} feedback-button`}
-              onclick={() => setFeedbackInput('')}
+              classes={!selectedCustomer ? 'display-none' : 'feedback-button'}
+              onclick={() => setFeedbackInput(true)}
               name="add new"
             />
           </div>
@@ -133,7 +123,7 @@ const FeedBackLog = () => {
       <div className="feedback-tabs">
         <div className="left-layout layout">
           <Form
-            classes={`${newCustomerInput} add-new`}
+            classes={newCustomerInput ? 'add-new' : 'display-none'}
             onchange={handleNameChange}
             onblur={hideInput}
             type="text"
@@ -151,8 +141,6 @@ const FeedBackLog = () => {
                   onclick={(event: any) => {
                     setIsClicked(customerDetails.id)
                     setCustomerId(customerDetails.id)
-                    getCustomerFeedback(event, customerDetails.id)
-                    setSearchInputVisibility('')
                   }}
                 >
                   {customerDetails.name}
@@ -164,7 +152,7 @@ const FeedBackLog = () => {
           {customerId ? (
             <>
               <Form
-                classes={`${feedbackInput} add-new`}
+                classes={feedbackInput ? 'add-new' : 'display-none'}
                 onchange={handleFeedbackChange}
                 onblur={hideInput}
                 type="text"

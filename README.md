@@ -58,6 +58,8 @@ location: `src > data > customerData`
 
 ### things to improve on
 
-- `Styling: ` I would most likely invest more time in styling and maybe painting the page.
+- `Styling:` I would most likely invest more time in styling and maybe painting the page.
 
-- I would write more tests on the FeedbackLog and write more indepth tests if I had more time.
+- `Tests:` I would write more tests on the FeedbackLog and write more indepth tests if I had more time.
+
+-  `Types:` There are some places where I used `any` for typing my datatype, I would look deeper if I had more time to make sure I properly define the datatype.

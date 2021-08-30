@@ -122,9 +122,12 @@ export const StyledFeedBackLog = styled.div`
     color: #1e90ff;
   }
 
-  .customer-cell {
+  @media (max-width: 500px){
+     .customer-cell {
     overflow-x: scroll;
+   }
   }
+ 
 
   .customer-cell:hover {
     cursor: pointer;
