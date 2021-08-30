@@ -76,7 +76,7 @@ const FeedBackLog = () => {
   const handleSearchChange = (event: any) => {
     setSearchTerm(event.target.value)
     const singleFeecbackWord = selectedCustomer.feedback.filter(singleFeeback =>
-      singleFeeback.toLowerCase().includes(searchTerm.toLowerCase()),
+      singleFeeback.toLowerCase().split(' ').join('').includes(searchTerm.toLowerCase()),
     )
 
     setSearchResult(singleFeecbackWord)
@@ -163,21 +163,25 @@ const FeedBackLog = () => {
                 onsubmit={handleFeedbackSubmit}
               />
               <div className="table">
-                {searchResult.length > 0
-                  ? searchResult.map((userFeedback, index) => (
-                      <TableCell
-                        dangerouslySetInnerHTML={createMarkup(
-                          userFeedback.replace(
-                            regex,
-                            `<span style="background: #1e90ff; color: #ffff">${searchTerm}</span>`,
-                          ),
-                        )}
-                        key={index}
-                      />
-                    ))
-                  : selectedCustomer.feedback.map((userFeedback, index) => (
-                      <TableCell key={index}>{userFeedback}</TableCell>
-                    ))}
+                {searchResult.length > 0 ? (
+                  searchResult.map((userFeedback, index) => (
+                    <TableCell
+                      dangerouslySetInnerHTML={createMarkup(
+                        userFeedback.replace(
+                          regex,
+                          `<span style="background: #1e90ff; color: #ffff">${searchTerm}</span>`,
+                        ),
+                      )}
+                      key={index}
+                    />
+                  ))
+                ) : searchTerm.length > 0 ? (
+                  <div className="center">No result for your search</div>
+                ) : (
+                  selectedCustomer.feedback.map((userFeedback, index) => (
+                    <TableCell key={index}>{userFeedback}</TableCell>
+                  ))
+                )}
               </div>
             </>
           ) : (
