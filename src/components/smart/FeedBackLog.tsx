@@ -99,25 +99,39 @@ const FeedBackLog = () => {
   return (
     <StyledFeedBackLog>
       <div className="menu-tab">
-        <div className="title">Customer Feedback</div>
-        <Form
-          classes={`${searchInputVisibility} search-input`}
-          onchange={handleSearchChange}
-          type="text"
-          value={searchTerm}
-          placeHolder="Search feedback"
-        />
-      </div>
-      <div className="feedback-tabs">
-        <div className="left-layout layout">
-          <span className="customer-header">
-            <span className="span-text-spacing">Customer</span>
+        <div className="upper-menu">
+          <div className="title">Customer Feedback</div>
+          <Form
+            classes={`${searchInputVisibility} search-input`}
+            onchange={handleSearchChange}
+            type="text"
+            value={searchTerm}
+            placeHolder="Search feedback"
+          />
+        </div>
+
+        <div className="lower-menu">
+          <div className="lower-menu-tab tab-spacing">
+            <span className="customer-text">Customer</span>
             <Button
               classes="customer-button"
               onclick={() => setNewCustomerInput('')}
               name="add new"
             />
-          </span>
+          </div>
+
+          <div className="lower-menu-tab">
+            <span className="feedback-text">Feedback</span>
+            <Button
+              classes={`${feedback.length === 0 ? buttonVisibility : ''} feedback-button`}
+              onclick={() => setFeedbackInput('')}
+              name="add new"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="feedback-tabs">
+        <div className="left-layout layout">
           <Form
             classes={`${newCustomerInput} add-new`}
             onchange={handleNameChange}
@@ -147,14 +161,6 @@ const FeedBackLog = () => {
           </div>
         </div>
         <div className="right-layout layout">
-          <span className="feedback-header">
-            <span className="span-text-spacing">Feedback</span>
-            <Button
-              classes={`${feedback.length === 0 ? buttonVisibility : ''} feedback-button`}
-              onclick={() => setFeedbackInput('')}
-              name="add new"
-            />
-          </span>
           {customerId ? (
             <>
               <Form

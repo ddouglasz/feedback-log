@@ -10,7 +10,7 @@ interface ITableCellProps {
 }
 
 const StyledTableCell = styled.div`
-  padding: 5px;
+  padding: 10px 20px;
   text-align: start;
   border-bottom: 1px solid #000000;
 `

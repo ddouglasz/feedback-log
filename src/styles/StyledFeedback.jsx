@@ -6,25 +6,46 @@ export const StyledFeedBackLog = styled.div`
   margin: 20px auto;
 
   .menu-tab {
-    /* width: 100%; */
-    height: 20vh;
     border-bottom: 1px solid #000000;
     text-align: start;
     position: relative;
-    display: flex;
-    justify-content: space-between;
     padding: 20px;
   }
 
+  .upper-menu {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .lower-menu {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+  }
+
+  .lower-menu-tab{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+  }
+
+  .tab-spacing {
+    margin-right: 20px
+  }
+
   .title {
-    /* padding: 20px;
-    font-weight: 900; */
+    font-weight: 900;
   }
 
   .search-input {
-    /* position: absolute;
-    right: 5%;
-    top: 15%; */
+    height: 30px;
+    width: 200px;
+    padding: 5px;
+    font-size: 20px;
+  }
+  .search-input:focus {
+    outline: none;
   }
 
   .feedback-tabs {
@@ -42,22 +63,6 @@ export const StyledFeedBackLog = styled.div`
     border-right: 1px solid #000000;
   }
 
-  .customer-header {
-    position: absolute;
-    top: -40px;
-    left: 5%;
-  }
-
-  .feedback-header {
-    position: absolute;
-    top: -40px;
-    right: 5%;
-  }
-
-  .span-text-spacing {
-    margin-right: 150px;
-  }
-
   .center {
     margin: auto;
     width: 40%;
@@ -71,9 +76,10 @@ export const StyledFeedBackLog = styled.div`
 
   .add-new {
     width: -webkit-fill-available;
-    padding: 5px;
+    padding: 10px 20px;
     border: none;
     border-bottom: 1px solid;
+    font-size: inherit;
   }
 
   .add-new:focus {
@@ -93,10 +99,6 @@ export const StyledFeedBackLog = styled.div`
   .add-new::-ms-input-placeholder {
     /* Microsoft Edge */
     color: #1e90ff;
-  }
-
-  .customer-cell {
-    /* background-color: #1e90ff; */
   }
 
   .customer-cell:hover {
