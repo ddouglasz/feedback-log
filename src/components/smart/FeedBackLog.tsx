@@ -167,21 +167,27 @@ const FeedBackLog = () => {
                 onsubmit={handleFeedbackSubmit}
               />
               <div className="table">
-                {searchResult.length > 0
-                  ? searchResult.map((userFeedback, index) => (
-                      <TableCell
-                        dangerouslySetInnerHTML={createMarkup(
-                          userFeedback.replace(
-                            regex,
-                            `<span style="background: #1e90ff; color: #ffff">${searchTerm}</span>`,
-                          ),
-                        )}
-                        key={index}
-                      />
-                    ))
-                  : selectedCustomer.feedback.map((userFeedback, index) => (
-                      <TableCell key={index}>{userFeedback}</TableCell>
-                    ))}
+                {searchResult.length > 0 ? (
+                  searchResult.map((userFeedback, index) => (
+                    <TableCell
+                      dangerouslySetInnerHTML={createMarkup(
+                        userFeedback.replace(
+                          regex,
+                          `<span style="background: #1e90ff; color: #ffff">${searchTerm}</span>`,
+                        ),
+                      )}
+                      key={index}
+                    />
+                  ))
+                ) : searchTerm.length > 0 ? (
+                  <div className="center">
+                    No result for <span style={{ color: '#000000' }}>{searchTerm}</span>
+                  </div>
+                ) : (
+                  selectedCustomer.feedback.map((userFeedback, index) => (
+                    <TableCell key={index}>{userFeedback}</TableCell>
+                  ))
+                )}
               </div>
             </>
           ) : (
